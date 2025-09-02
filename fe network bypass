@@ -1,0 +1,23 @@
+local p=game:GetService("Players").LocalPlayer
+local s=game:GetService("StarterGui")
+local r=game:GetService("RunService")
+s:SetCore("SendNotification",{Title="Network Bypass",Text="bypass",Icon="rbxassetid://12562053596"})
+
+local hats={}
+for _,h in pairs(p.Character:GetChildren())do
+    if h:IsA("Accessory")then
+        local hd=h.Handle
+        hd.AccessoryWeld:Destroy()
+        table.insert(hats,hd)
+    end
+end
+
+r.Heartbeat:Connect(function()
+    sethiddenproperty(p,"SimulationRadius",1/0)
+    for _,h in pairs(hats)do
+        if h:IsDescendantOf(workspace)then
+            h.Velocity=Vector3.new(14,14,14)
+            h.CFrame=p.Character.Head.CFrame -- stick to head so no fall
+        end
+    end
+end)
